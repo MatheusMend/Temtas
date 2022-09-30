@@ -1,12 +1,10 @@
-from PIL import Image, ImageTk
 import queue
 import keyboard
 import threading
 import time
 from tkinter import *
 from tkinter import filedialog, ttk, messagebox  # Versão? Popup de Koish? Pop up de Contador FreeTem/Luma?
-
-
+from PIL import Image, ImageTk
 
 #### Root Ui ####
 
@@ -20,9 +18,10 @@ root.config(menu=my_menu)
 #### Menus ####
 
 
-def hideallframes():
+def hideallframes():  # Esconder os frames
     n2.pack_forget()
     n.pack_forget()
+    Koish.pack_forget()
 
 
 ### Visão Geral ###
@@ -44,13 +43,19 @@ def Teste2():
     n2.pack(fill='both', expand=1)
 
 
+def Koishfishing():
+    hideallframes()
+    Koish.pack(fill='both', expand=1)
+
+
 weeklys = Menu(my_menu)
 my_menu.add_cascade(label="Semanais", menu=weeklys)
 weeklys.add_command(label="Check List", command=Teste2)
 weeklys.add_command(label="FreeTem", command=Teste2)
-weeklys.add_command(label="Koish", command=Teste2)
+weeklys.add_command(label="Koish", command=Koishfishing)
 weeklys.add_command(label="Postal Service", command=Teste2)
 
+## Check List ##
 
 ## FreeTem Counter ##
 
@@ -60,6 +65,7 @@ n = Frame(root, width=400, height=400, bg='red')
 freetemcounter = Label(n2, text="HUM?")
 freetemcounter.place(x=500, y=0)
 
+# Stack Overflow helped here
 
 def app_main_loop(my_label):
     # Create another thread that monitors the keyboard
@@ -98,20 +104,37 @@ main_loop_thread = threading.Thread(target=app_main_loop, args=(freetemcounter,)
 main_loop_thread.daemon = True
 main_loop_thread.start()
 
-## Lairs ##
+## Koish ##
+
+Koish = Frame(root, width=400, height=400, bg='blue')
+
+
+def weeklykoish():  # Feito pensando em uma imagem de Koish com as dimensões (720x570)
+    global koishdaSemana
+    root.filename = filedialog.askopenfilename(initialdir="/", title="Koish da semana",
+                                                filetypes=(("Imagem Png", "*.png"), ("Outros Arquivos", "*.*")))
+    koishdaSemana = ImageTk.PhotoImage(Image.open(root.filename))
+    koishdaSemanaLabel = Label(Koish, image=koishdaSemana)
+    koishdaSemanaLabel.place(x=530, y=0)
+
+
+KoishButton = Button(Koish, text="Koish dessa semana", command=weeklykoish)
+KoishButton.place(x=800, y=580)
+
+### Lairs ###
 
 lairs = Menu(my_menu)
 my_menu.add_cascade(label="Lairs", menu=lairs)
 lairs.add_command(label="Anak Volcano - Tyranak", command=Teste2)
 lairs.add_command(label="Sacred Lake - Volgon", command=Teste2)
 
-## PvP ##
+### PvP ###
 
 pvp = Menu(my_menu)
 my_menu.add_cascade(label="PvP", menu=pvp)
 pvp.add_command(label="Dashboard", command=Teste2)
 
-## Tamers Paradise ##
+### Tamers Paradise ###
 
 tamersparadise = Menu(my_menu)
 my_menu.add_cascade(label="Tamers Paradise", menu=tamersparadise)
@@ -121,14 +144,14 @@ tamersparadise.add_command(label="Grit", command=Teste2)
 tamersparadise.add_command(label="Safari", command=Teste2)
 tamersparadise.add_command(label="Tower", command=Teste2)
 
-## Tempedia ##
+### Tempedia ###
 
 tempedia = Menu(my_menu)
 my_menu.add_cascade(label="Tempedia", menu=tempedia)
 tempedia.add_command(label="Breeding Projects", command=Teste2)
 tempedia.add_command(label="Luma Tempedia", command=Teste2)
 
-## Sobre ##
+### Sobre ###
 
 sobre = Menu(my_menu)
 my_menu.add_cascade(label="Sobre", menu=sobre)
