@@ -58,6 +58,7 @@ weeklys.add_command(label="Postal Service", command=Teste2)
 ## Check List ##
 
 ## FreeTem Counter ##
+Freecount = 0
 
 n2 = Frame(root, width=400, height=400, bg='yellow')
 n = Frame(root, width=400, height=400, bg='red')
@@ -67,6 +68,7 @@ freetemcounter.place(x=500, y=0)
 
 # Stack Overflow helped here
 
+
 def app_main_loop(my_label):
     # Create another thread that monitors the keyboard
     input_queue = queue.Queue()
@@ -74,15 +76,17 @@ def app_main_loop(my_label):
     kb_input_thread.daemon = True
     kb_input_thread.start()
 
-    # Main logic loop
+    # Main logic loop # Pensar Em Multi Thread.
     run_active = True
     while True:
         if not input_queue.empty():
             if run_active and (input_queue.get() == "+"):
-                run_active = False
-                Lap(my_label)
-                Stop()
-        time.sleep(0.1)  # Aparentemente não funciona sem
+                CountUpdate(my_label)
+        time.sleep(0.05)  # Aparentemente não funciona sem
+        if not input_queue.empty():
+            if run_active and (input_queue.get() == "-"):
+                CountUpdate2(my_label)
+        time.sleep(0.05)  # Aparentemente não funciona sem
 
 
 def _check_plus_pressed(input_queue):
@@ -90,14 +94,21 @@ def _check_plus_pressed(input_queue):
         if keyboard.is_pressed('+'):
             input_queue.put("+")
         time.sleep(0.1)  # Aparentemente não funciona sem
+        if keyboard.is_pressed('-'):
+            input_queue.put("-")
+            time.sleep(0.1)  # Aparentemente não funciona sem
 
 
-def Lap(my_label):
-    my_label.configure(text="Lap")
+def CountUpdate(my_label):
+    global Freecount
+    Freecount += 1
+    my_label.config(text=str(Freecount))
 
 
-def Stop():
-    print("Stopped")
+def CountUpdate2(my_label):
+    global Freecount
+    Freecount = Freecount - 1
+    my_label.config(text=str(Freecount))
 
 
 main_loop_thread = threading.Thread(target=app_main_loop, args=(freetemcounter,))
