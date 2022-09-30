@@ -1,9 +1,12 @@
+from PIL import Image, ImageTk
 import queue
 import keyboard
 import threading
 import time
 from tkinter import *
-from tkinter import ttk
+from tkinter import filedialog, ttk, messagebox  # Versão? Popup de Koish? Pop up de Contador FreeTem/Luma?
+
+
 
 #### Root Ui ####
 
@@ -16,71 +19,47 @@ root.config(menu=my_menu)
 
 #### Menus ####
 
-## Funções ##
-
-def Teste1():
-    hideallframes()
-    n.pack(fill='both', expand=1)
-
-
-def Teste2():
-    hideallframes()
-    n2.pack(fill='both', expand=1)
-
 
 def hideallframes():
     n2.pack_forget()
     n.pack_forget()
 
 
-## Visão Geral ##
+### Visão Geral ###
+
+def Teste1():
+    hideallframes()
+    n.pack(fill='both', expand=1)
+
 
 visaoGeral = Menu(my_menu)
 my_menu.add_cascade(label="Visão Geral", menu=visaoGeral)
-visaoGeral.add_command(label="New", command=Teste1)
+visaoGeral.add_command(label="Resumo", command=Teste1)
 
-## Semanais ##
-weeklys = Menu(my_menu)
-my_menu.add_cascade(label="Semanais", menu=weeklys)
-weeklys.add_command(label="dX", command=Teste2)
 
-## Tamers Paradise ##
+### Semanais ###
 
-weeklys = Menu(my_menu)
-my_menu.add_cascade(label="Semanais", menu=weeklys)
-weeklys.add_command(label="dX", command=Teste2)
+def Teste2():
+    hideallframes()
+    n2.pack(fill='both', expand=1)
 
-## Lairs ##
 
 weeklys = Menu(my_menu)
 my_menu.add_cascade(label="Semanais", menu=weeklys)
-weeklys.add_command(label="dX", command=Teste2)
+weeklys.add_command(label="Check List", command=Teste2)
+weeklys.add_command(label="FreeTem", command=Teste2)
+weeklys.add_command(label="Koish", command=Teste2)
+weeklys.add_command(label="Postal Service", command=Teste2)
 
-## PvP ##
 
-weeklys = Menu(my_menu)
-my_menu.add_cascade(label="Semanais", menu=weeklys)
-weeklys.add_command(label="dX", command=Teste2)
-
-## Tempedia ##
-
-weeklys = Menu(my_menu)
-my_menu.add_cascade(label="Semanais", menu=weeklys)
-weeklys.add_command(label="dX", command=Teste2)
-
-## Sobre ##
-
-weeklys = Menu(my_menu)
-my_menu.add_cascade(label="Semanais", menu=weeklys)
-weeklys.add_command(label="dX", command=Teste2)
+## FreeTem Counter ##
 
 n2 = Frame(root, width=400, height=400, bg='yellow')
 n = Frame(root, width=400, height=400, bg='red')
 
-#### FreeTem Counter ####
+freetemcounter = Label(n2, text="HUM?")
+freetemcounter.place(x=500, y=0)
 
-my_label = Label(n2, text="HUM?")
-my_label.place(x=500, y=0)
 
 def app_main_loop(my_label):
     # Create another thread that monitors the keyboard
@@ -115,8 +94,45 @@ def Stop():
     print("Stopped")
 
 
-main_loop_thread = threading.Thread(target=app_main_loop, args=(my_label,))
+main_loop_thread = threading.Thread(target=app_main_loop, args=(freetemcounter,))
 main_loop_thread.daemon = True
 main_loop_thread.start()
+
+## Lairs ##
+
+lairs = Menu(my_menu)
+my_menu.add_cascade(label="Lairs", menu=lairs)
+lairs.add_command(label="Anak Volcano - Tyranak", command=Teste2)
+lairs.add_command(label="Sacred Lake - Volgon", command=Teste2)
+
+## PvP ##
+
+pvp = Menu(my_menu)
+my_menu.add_cascade(label="PvP", menu=pvp)
+pvp.add_command(label="Dashboard", command=Teste2)
+
+## Tamers Paradise ##
+
+tamersparadise = Menu(my_menu)
+my_menu.add_cascade(label="Tamers Paradise", menu=tamersparadise)
+tamersparadise.add_command(label="Draft", command=Teste2)
+tamersparadise.add_command(label="DigiLair", command=Teste2)
+tamersparadise.add_command(label="Grit", command=Teste2)
+tamersparadise.add_command(label="Safari", command=Teste2)
+tamersparadise.add_command(label="Tower", command=Teste2)
+
+## Tempedia ##
+
+tempedia = Menu(my_menu)
+my_menu.add_cascade(label="Tempedia", menu=tempedia)
+tempedia.add_command(label="Breeding Projects", command=Teste2)
+tempedia.add_command(label="Luma Tempedia", command=Teste2)
+
+## Sobre ##
+
+sobre = Menu(my_menu)
+my_menu.add_cascade(label="Sobre", menu=sobre)
+sobre.add_command(label="Versão", command=Teste2)
+
 
 root.mainloop()

@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import filedialog, ttk, messagebox  # Versão? Popup de Koish? Pop up de Contador FreeTem/Luma?
-import pyglet
+import pyglet  # Aparentemente a fonte faz o contador de threading quebrar
 
 
 #### Custom Font ####
